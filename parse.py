@@ -14,6 +14,7 @@ def parse(row):
     'name': row['id'],
     'date': releases[row['id']]['date'],
     'passive': releases[row['id']]['passive'],
+    # 'passive': row['passive']['description'],
     'q': row['spells'][0]['tooltip'],
     'w': row['spells'][1]['tooltip'],
     'e': row['spells'][2]['tooltip'],
@@ -35,7 +36,9 @@ champions['total'] = champions['q'] + champions['w'] + champions['e'] + champion
 
 champions['date_float'] = champions['date'].apply(lambda d : d.timestamp())
 
-champions.to_csv(out_file)
+sorted_champions = champions.sort_values(by=['total', 'date', 'name'], ascending=False)
+
+sorted_champions.to_csv(out_file)
 
 fit = linregress(champions['date_float'], champions['total'].values)
 print(fit.slope, fit.intercept, fit.pvalue)
