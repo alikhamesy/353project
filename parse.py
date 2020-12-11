@@ -7,4 +7,4 @@ in_file = pd.read_json(sys.argv[1], orient='index')
 
 # champions = json.loads(in_file)
 
-print(in_file['data'][in_file.index.values])
+print(pd.json_normalize(in_file['data']).columns)
