@@ -131,3 +131,6 @@ dmypy.json
 secret.py
 *.json
 *.js
+*.csv
+*.svg
+*.png
