@@ -5,6 +5,7 @@ import numpy as np
 from releases import releases
 import matplotlib.pyplot as plt
 from scipy.stats import linregress
+import seaborn
 
 in_file = pd.read_json(sys.argv[1], orient='index')
 out_file = sys.argv[2]
@@ -40,8 +41,11 @@ champions.to_csv(out_file)
 fit = linregress(champions['date_float'], champions['total'].values)
 print(fit.slope, fit.intercept, fit.pvalue)
 
-
-plt.figure(figsize=(12, 4))
+seaborn.set(style = 'whitegrid',color_codes=True,font_scale=1.2, rc={"lines.linewidth": 4})
+plt.figure(figsize=(13, 5))
 plt.plot(champions['date'], champions['total'], 'b.', alpha=0.5)
 plt.plot(champions['date'], champions['date_float']*fit.slope + fit.intercept, "r-", linewidth=3)
+plt.xlabel('Relase Dates')
+plt.ylabel('Total Word Count')
+plt.title('Champion Description Over Time')
 plt.savefig('champions.png')
