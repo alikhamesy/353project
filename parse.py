@@ -12,8 +12,8 @@ out_file = sys.argv[2]
 def parse(row):
   return pd.Series({
     'name': row['id'],
-    'date': releases[row['id']],
-    'passive': row['passive']['description'],
+    'date': releases[row['id']]['date'],
+    'passive': releases[row['id']]['passive'],
     'q': row['spells'][0]['tooltip'],
     'w': row['spells'][1]['tooltip'],
     'e': row['spells'][2]['tooltip'],
@@ -43,4 +43,5 @@ print(fit.slope, fit.intercept, fit.pvalue)
 
 plt.figure(figsize=(12, 4))
 plt.plot(champions['date'], champions['total'], 'b.', alpha=0.5)
-plt.savefig('cpu.png')
+plt.plot(champions['date'], champions['date_float']*fit.slope + fit.intercept, "r-", linewidth=3)
+plt.savefig('champions.png')
