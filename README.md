@@ -13,8 +13,9 @@ import seaborn
 ```
 ## Order of execution
 
--  Get the data (10.25 is the version we are using, it can be anything from 10.1 to 10.25)
+- Get the data (10.25 is the version we are using, it can be anything from 10.1 to 10.25)
 - This cleans the data in order to create a Pandas dataframe
+
 
 ``` 
 python3 get_data.py 10.25 champions.json
@@ -35,13 +36,13 @@ Along with a file a `released.py` file in the format:
 	“name”: {“date:” “yyyy-mm-dd”, “passive”: “champion passive...”},
 }
 ```
--  In order to outtput the graph and data
+- `champions.json` will now contain all the champion data after the fetch (so you don't have to run get_data.py)
 - Run: 
 
  ```
- python3 parse.py champions.json champs.csv
+ python3 parse.py champions.json parsed.csv
  ```
-
+- `parsed.csv` will now contain the output of the parse.py file, which is the list of champions and their word count (sorted by total word count)
 ## Extras
 
 During our investiagtion we made a program file `mataches.py`
