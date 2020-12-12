@@ -134,3 +134,6 @@ secret.py
 *.csv
 *.svg
 *.png
+
+!champions.json
+!parsed.csv

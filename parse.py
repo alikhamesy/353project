@@ -14,8 +14,8 @@ def parse(row):
   return pd.Series({
     'name': row['id'],
     'date': releases[row['id']]['date'],
-    'passive': releases[row['id']]['passive'],
-    # 'passive': row['passive']['description'],
+    # 'passive': releases[row['id']]['passive'],
+    'passive': row['passive']['description'],
     'q': row['spells'][0]['tooltip'],
     'w': row['spells'][1]['tooltip'],
     'e': row['spells'][2]['tooltip'],
@@ -35,6 +35,8 @@ champions['date'] = pd.to_datetime(champions['date'])
 
 champions['total'] = champions['q'] + champions['w'] + champions['e'] + champions['r'] + champions['passive']
 
+champions = champions[champions['total'] < 800]
+
 champions['date_float'] = champions['date'].apply(lambda d : d.timestamp())
 
 sorted_champions = champions.sort_values(by=['total', 'date', 'name'], ascending=False)
@@ -45,10 +47,10 @@ fit = linregress(champions['date_float'], champions['total'].values)
 print(fit.slope, fit.intercept, fit.pvalue)
 
 seaborn.set(style = 'whitegrid',color_codes=True,font_scale=1.2, rc={"lines.linewidth": 4})
-plt.figure(figsize=(13, 5))
-plt.plot(champions['date'], champions['total'], 'b.', alpha=0.5)
+plt.figure(figsize=(10, 5))
+plt.plot(champions['date'], champions['total'], 'b.', alpha=0.8)
 plt.plot(champions['date'], champions['date_float']*fit.slope + fit.intercept, "r-", linewidth=3)
 plt.xlabel('Relase Dates')
 plt.ylabel('Total Word Count')
-plt.title('Champion Description Over Time')
+plt.title('Champion Kit Wordcount Over Time')
 plt.savefig('champions.png')
